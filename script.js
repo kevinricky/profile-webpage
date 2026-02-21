@@ -2,6 +2,23 @@
    KEVIN RICKY – PROFILE WEBSITE SCRIPTS
    ============================================================ */
 
+/* ---------- Theme Toggle ---------- */
+const themeToggle = document.getElementById('themeToggle');
+
+// Check for saved theme preference or default to light
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+});
+
 /* ---------- Hamburger Menu ---------- */
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.querySelector('.nav-links');

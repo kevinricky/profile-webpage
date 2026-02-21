@@ -26,6 +26,19 @@
   --transition:    0.3s ease;
 }
 
+/* ---------- Dark Mode Variables ---------- */
+[data-theme="dark"] {
+  --bg:            #0f172a;
+  --bg-alt:        #1e293b;
+  --surface:       #1e293b;
+  --border:        #334155;
+  --text:          #f1f5f9;
+  --text-muted:    #94a3b8;
+  --text-light:    #64748b;
+  --shadow:        0 4px 24px rgba(0,0,0,0.3);
+  --shadow-hover:  0 8px 40px rgba(37,99,235,0.25);
+}
+
 /* ---------- Reset & Base ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -36,6 +49,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  transition: background-color 1s ease, color 1s ease;
 }
 
 a { color: var(--primary); text-decoration: none; transition: color var(--transition); }
@@ -64,6 +78,7 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: background-color 1s ease, border-color 1s ease;
 }
 
 .nav-brand {
@@ -118,6 +133,47 @@ img { max-width: 100%; display: block; }
   transition: all var(--transition);
 }
 
+/* ---------- Theme Toggle ---------- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all var(--transition), background-color 1s ease, border-color 1s ease;
+  margin-left: 1rem;
+}
+
+.theme-toggle:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.theme-toggle i {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+
+.theme-toggle:hover i {
+  color: var(--primary);
+}
+
+/* Icon visibility */
+.theme-toggle .fa-sun { display: none; }
+.theme-toggle .fa-moon { display: block; }
+
+[data-theme="dark"] .theme-toggle .fa-sun { display: block !important; }
+[data-theme="dark"] .theme-toggle .fa-moon { display: none !important; }
+
+/* Dark mode specific styles */
+[data-theme="dark"] .navbar { background: rgba(15, 23, 42, 0.92); }
+[data-theme="dark"] .hamburger span { background: var(--text); }
+
 /* ============================================================
    HERO
    ============================================================ */
@@ -163,16 +219,11 @@ img { max-width: 100%; display: block; }
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #fff;
+  object-fit: cover;
   margin: 0 auto 1.5rem;
   box-shadow: 0 0 0 4px rgba(37,99,235,0.3), 0 0 0 8px rgba(37,99,235,0.1);
   animation: pulse 3s ease-in-out infinite;
+  border: 3px solid rgba(255,255,255,0.2);
 }
 
 @keyframes pulse {
@@ -257,7 +308,10 @@ img { max-width: 100%; display: block; }
   padding: 5rem 2rem;
 }
 
-.bg-alt { background: var(--bg-alt); }
+.bg-alt { 
+  background: var(--bg-alt);
+  transition: background-color 1s ease;
+}
 
 .section-title {
   text-align: center;
@@ -308,7 +362,7 @@ img { max-width: 100%; display: block; }
   padding: 1.75rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), background-color 1s ease, border-color 1s ease;
 }
 
 .card:hover {
@@ -330,13 +384,7 @@ img { max-width: 100%; display: block; }
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #fff;
+  object-fit: cover;
   flex-shrink: 0;
   box-shadow: 0 4px 16px rgba(37,99,235,0.3);
 }
@@ -426,6 +474,7 @@ img { max-width: 100%; display: block; }
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
   border: 1px solid var(--border);
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease;
 }
 
 /* ---------- Achievements ---------- */
@@ -547,6 +596,7 @@ img { max-width: 100%; display: block; }
   color: var(--primary);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
+  transition: background-color 1s ease, color 1s ease;
 }
 
 /* ============================================================
