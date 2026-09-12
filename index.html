@@ -5,21 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kevin Ricky – Profile</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
-<body>
+<body id="top">
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <div class="nav-brand">KR</div>
+    <a class="nav-brand" href="#top" aria-label="Back to top">KR</a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
+      <li><a href="#meet">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#public-projects">Public Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div style="display: flex; align-items: center;">
+    <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <i class="fas fa-moon"></i>
         <i class="fas fa-sun"></i>
@@ -233,10 +235,6 @@
             <h3>Vellore Institute of Technology</h3>
             <p class="edu-location"><i class="fas fa-map-marker-alt"></i> Vellore</p>
             <p class="edu-year"><i class="fas fa-calendar-alt"></i> 2017 – 2019</p>
-            <div class="edu-score">
-              <span class="score-label">Score</span>
-              <span class="score-value">79.3%</span>
-            </div>
           </div>
         </div>
 
@@ -247,10 +245,6 @@
             <h3>Karunya University</h3>
             <p class="edu-location"><i class="fas fa-map-marker-alt"></i> Coimbatore</p>
             <p class="edu-year"><i class="fas fa-calendar-alt"></i> 2011 – 2015</p>
-            <div class="edu-score">
-              <span class="score-label">Score</span>
-              <span class="score-value">71.2%</span>
-            </div>
           </div>
         </div>
 
@@ -261,10 +255,6 @@
             <h3>Kendriya Vidyalaya</h3>
             <p class="edu-location"><i class="fas fa-map-marker-alt"></i> Thane</p>
             <p class="edu-year"><i class="fas fa-calendar-alt"></i> 2009 – 2011</p>
-            <div class="edu-score">
-              <span class="score-label">Score</span>
-              <span class="score-value">75.4%</span>
-            </div>
           </div>
         </div>
 
@@ -275,10 +265,6 @@
             <h3>Hiranandani Foundation School</h3>
             <p class="edu-location"><i class="fas fa-map-marker-alt"></i> Thane</p>
             <p class="edu-year"><i class="fas fa-calendar-alt"></i> 2009</p>
-            <div class="edu-score">
-              <span class="score-label">Score</span>
-              <span class="score-value">82.57%</span>
-            </div>
           </div>
         </div>
 
@@ -396,6 +382,20 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ===== PUBLIC PROJECTS ===== -->
+    <section class="section" id="public-projects">
+      <h2 class="section-title"><span>Public Projects</span></h2>
+      <div class="cards-grid single-card">
+        <div class="card wip-card">
+          <div class="wip-icon"><i class="fas fa-laptop-code"></i></div>
+          <div>
+            <h3>Work In Progress</h3>
+            <p class="card-desc">Public projects will be added here as they become available.</p>
+          </div>
+        </div>
       </div>
     </section>
 
