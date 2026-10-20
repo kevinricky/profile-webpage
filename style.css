@@ -222,28 +222,21 @@ h2::before { content: "$ "; color: var(--green); }
 
 /* ---------- Electronic ripple (GitHub / LinkedIn buttons) ----------
    Two rings pulse outward past the button edge. steps() makes the motion
-   jump frame-by-frame like a digital signal instead of easing smoothly. */
+   advance in small fixed increments, like a digital signal, rather than easing. */
 .btn.ripple { position: relative; }
 .btn.ripple::before,
 .btn.ripple::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   border: 1px solid var(--accent); opacity: 0;
 }
-.btn.ripple:hover::before { animation: pulse-ring .9s steps(5, end) infinite; }
-.btn.ripple:hover::after  { animation: pulse-ring .9s steps(5, end) .3s infinite; border-style: dashed; }
-.btn.ripple:hover { animation: glitch .9s steps(1, end) infinite; }
+.btn.ripple:hover::before { animation: pulse-ring 1.1s steps(12, end) infinite; }
+.btn.ripple:hover::after  { animation: pulse-ring 1.1s steps(12, end) .35s infinite; border-style: dashed; }
 
 @keyframes pulse-ring {
   0%   { inset: 0;      opacity: .95; }
   100% { inset: -16px;  opacity: 0; }
 }
-@keyframes glitch {
-  0%, 100% { transform: translateY(-2px); }
-  18%      { transform: translate(1px, -2px); }
-  36%      { transform: translate(-1px, -2px); }
-  54%      { transform: translateY(-2px); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .btn.ripple:hover, .btn.ripple:hover::before, .btn.ripple:hover::after { animation: none; }
+  .btn.ripple:hover::before, .btn.ripple:hover::after { animation: none; }
   .btn.ripple:hover::before { opacity: .6; inset: -4px; }
 }
