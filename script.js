@@ -1,126 +1,137 @@
 /* ============================================================
    KEVIN RICKY – PROFILE WEBSITE SCRIPTS
+   Renders the page from data/resume.json, then wires up the UI.
    ============================================================ */
 
-/* ---------- Theme Toggle ---------- */
-const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+const app = document.getElementById('app');
 
-// Check for saved theme preference or default to light
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-  document.documentElement.setAttribute('data-theme', savedTheme);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const items = a => a.map(x => `<li>${esc(x)}</li>`).join('');
+const chips = a => a.map(x => `<span>${esc(x)}</span>`).join('');
+
+/* ---------- Render ---------- */
+function render(r) {
+  const [first, ...rest] = r.name.split(' ');
+  const c = r.contact;
+
+  app.innerHTML = `
+    <header>
+      <p class="prompt">kevin@platform:~$ whoami</p>
+      <div class="hero-row">
+        <img class="avatar" src="assets/20230520_122155.jpg" alt="${esc(r.name)}" />
+        <div>
+          <h1>${esc(first)} <em>${esc(rest.join(' '))}</em></h1>
+          <p class="role cursor">${esc(r.title)} · ${esc(r.subtitle)}</p>
+        </div>
+      </div>
+      <p class="lede">${esc(r.summary)}</p>
+      <div class="chips">${chips(r.stack)}</div>
+      <div class="links">
+        <a class="btn primary" href="mailto:${esc(c.email)}">Hire me</a>
+        <a class="btn" href="${esc(c.github)}" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="metrics reveal">
+        ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
+      </div>
+    </header>
+
+    <section id="experience">
+      <h2>git log --career</h2>
+      ${r.experience.map(e => `
+        <article class="job reveal">
+          <header>
+            <div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div>
+            <span class="when">${esc(e.period)}</span>
+          </header>
+          <ul>${items(e.highlights)}</ul>
+          <div class="tags">${chips(e.tech)}</div>
+        </article>`).join('')}
+    </section>
+
+    <section id="skills">
+      <h2>ls ./skills</h2>
+      <div class="grid">
+        ${r.skills.map(s => `<div class="box reveal"><b>${esc(s.group)}</b><div class="tags">${chips(s.items)}</div></div>`).join('')}
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>cat education awards</h2>
+      <div class="grid">
+        ${r.education.map(e => `<div class="box reveal"><b>${esc(e.degree)} · ${esc(e.period)}</b><p>${esc(e.school)}, ${esc(e.place)}</p></div>`).join('')}
+        ${r.awards.map(a => `<div class="box reveal"><b>award</b><p>${esc(a)}</p></div>`).join('')}
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>ls ./public-projects</h2>
+      <div class="soon reveal">Work in progress – public projects will be added here as they become available.</div>
+    </section>`;
+
+  document.getElementById('contact').innerHTML = `
+    <h2>Get in touch</h2>
+    <p>Open to new opportunities. Feel free to reach out.</p>
+    <div class="links">
+      <a class="btn primary" href="mailto:${esc(c.email)}">${esc(c.email)}</a>
+      <a class="btn" href="tel:${esc(c.phone.replace(/[^+\d]/g, ''))}">${esc(c.phone)}</a>
+      <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="${esc(c.github)}" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <small>&copy; ${new Date().getFullYear()} ${esc(r.name)}</small>`;
+
+  initReveal();
+  initActiveNav();
 }
 
-themeToggle.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
+/* ---------- Scroll reveal ---------- */
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  els.forEach(el => io.observe(el));
+}
+
+/* ---------- Active nav link ---------- */
+function initActiveNav() {
+  const links = document.querySelectorAll('.nav-links a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${e.target.id}`));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('section[id], footer[id]').forEach(s => io.observe(s));
+}
+
+/* ---------- Theme toggle ---------- */
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+  root.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch (e) {}
 });
 
-/* ---------- Hamburger Menu ---------- */
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  hamburger.classList.toggle('active');
+/* ---------- Mobile menu ---------- */
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', open);
+});
+navLinks.addEventListener('click', e => {
+  if (e.target.tagName === 'A') { navLinks.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false); }
 });
 
-// Close menu when a link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    hamburger.classList.remove('active');
+/* ---------- Load data ---------- */
+fetch('data/resume.json')
+  .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
+  .then(render)
+  .catch(() => {
+    app.innerHTML = '<p class="lede">Could not load profile data. Please reach me at kevinricky999@yahoo.com.</p>';
   });
-});
-
-/* ---------- Active Nav Link on Scroll ---------- */
-const sections = document.querySelectorAll('header[id], section[id], footer[id]');
-const navItems = document.querySelectorAll('.nav-links a');
-
-const observerOptions = {
-  root: null,
-  rootMargin: '-40% 0px -55% 0px',
-  threshold: 0
-};
-
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.getAttribute('id');
-      navItems.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${id}`) {
-          link.classList.add('active');
-        }
-      });
-    }
-  });
-}, observerOptions);
-
-sections.forEach(section => sectionObserver.observe(section));
-
-/* ---------- Scroll Reveal Animation ---------- */
-const revealElements = document.querySelectorAll('.card, .section-title');
-
-revealElements.forEach(el => el.classList.add('reveal'));
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      // Stagger animation for cards in the same grid
-      const siblings = entry.target.parentElement.querySelectorAll('.reveal:not(.visible)');
-      siblings.forEach((sibling, index) => {
-        setTimeout(() => {
-          sibling.classList.add('visible');
-        }, index * 80);
-      });
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-revealElements.forEach(el => revealObserver.observe(el));
-
-/* ---------- Navbar shadow on scroll ---------- */
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 20) {
-    navbar.style.boxShadow = '0 4px 24px rgba(0,0,0,0.12)';
-  } else {
-    navbar.style.boxShadow = '0 2px 12px rgba(0,0,0,0.06)';
-  }
-}, { passive: true });
-
-/* ---------- Smooth scroll for anchor links ---------- */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = 72; // navbar height
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-});
-
-/* ---------- Hamburger animation ---------- */
-const style = document.createElement('style');
-style.textContent = `
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-`;
-document.head.appendChild(style);

@@ -1,0 +1,83 @@
+{
+  "name": "Kevin Ricky",
+  "title": "Senior Data & ML Platform Engineer",
+  "subtitle": "Distributed Systems",
+  "stack": ["Ray", "Kafka", "Kubernetes", "Spark", "Azure Databricks"],
+  "contact": {
+    "email": "kevinricky999@yahoo.com",
+    "phone": "+91-8098457296",
+    "linkedin": "https://www.linkedin.com/in/kevinricky/",
+    "github": "https://github.com/kevinricky",
+    "site": "kevinricky.online"
+  },
+  "summary": "Senior Data & ML Platform Engineer with 7+ years building distributed data and compute platforms in payments (Visa) and automotive manufacturing (Mercedes-Benz R&D India). Architected a Ray, Kafka and Kubernetes platform that runs real-time fraud-detection models on ~100M transactions/day (500M peak), and led Spark / Azure Databricks data products at petabyte scale. Leads engineering teams from PoC to production, sets architecture and CI/CD standards, and partners with data science, SRE and business stakeholders.",
+  "metrics": [
+    { "value": "~100M", "label": "transactions/day (500M peak) on the Ray fraud-detection platform" },
+    { "value": "~60%", "label": "platform cost reduction vs. Flink jobs on low-load models" },
+    { "value": "~$50M", "label": "per year savings from distributed optimisation at Mercedes-Benz" },
+    { "value": "3h → 2min", "label": "optimisation runtime" },
+    { "value": "50+", "label": "enterprise data products, ~2 TB/day, 40+ pipelines" },
+    { "value": "36 → 2 mo", "label": "plant layout planning effort (saves €500K per cycle)" }
+  ],
+  "skills": [
+    { "group": "Distributed Systems & Platform", "items": ["Ray (Core, Actors, Scheduling)", "DAG Orchestration", "Queue-Driven Scheduling", "Fault Tolerance", "Dead Letter Queues", "Workload Isolation", "Horizontal Scalability"] },
+    { "group": "ML Platform & Streaming", "items": ["Apache Kafka", "Apache Flink", "PyFlink", "Redis", "Event-Driven Architecture", "Real-Time Fraud Detection", "Model Productionisation"] },
+    { "group": "Data Engineering & Lakehouse", "items": ["Apache Spark", "PySpark", "Azure Databricks", "Medallion Architecture", "Data Products", "ETL / ELT", "Hadoop", "Hive", "SQL"] },
+    { "group": "Cloud, DevOps & Observability", "items": ["Azure (ADLS, Functions, Web Apps, DevOps)", "GCP", "Kubernetes", "Jenkins", "CI/CD", "Grafana", "Prometheus", "OpenSearch"] },
+    { "group": "Optimisation & BI", "items": ["Google OR-Tools", "Mathematical Optimisation", "Cost Optimisation", "Performance Tuning", "Power BI", "Qlik"] },
+    { "group": "Programming & Backend", "items": ["Python", "SQL", "Java", "C++", "JavaScript", "FastAPI", "Flask", "REST APIs", "SQL Server", "MySQL", "NoSQL"] },
+    { "group": "Leadership", "items": ["Technical Leadership", "Solution Architecture", "Mentoring", "Release Management", "Stakeholder Management", "PoC-to-Production"] }
+  ],
+  "experience": [
+    {
+      "company": "Visa Inc.",
+      "role": "Senior Platform Engineer – AI Platform (Fraud Detection)",
+      "period": "2025 – Present",
+      "current": true,
+      "highlights": [
+        "Architected a Ray-based distributed Python execution platform on Kubernetes that onboards real-time fraud-detection models onto streaming transaction profiles at ~100M transactions/day (500M peak); adopted by the modelling team for 3 models.",
+        "Designed a modular execution engine with DAG-based orchestration, parallel execution, actor pooling, queue-driven scheduling and configurable batch processing.",
+        "Built event-driven execution on Kafka (6 topics × 40 partitions across 3 data centres) with Redis-backed coordination, plus reusable Kafka, Redis, Grafana and OpenSearch integrations.",
+        "Engineered fault tolerance with dead letter queues, automatic retries, workload isolation and recovery; resolved Ray out-of-memory failures by automating Kubernetes worker restarts.",
+        "Positioned the platform as a lower-cost replacement for Flink jobs on low-load models: ~60% cost reduction, ~$250K/year saved per model (up to 5K TPS).",
+        "Led a team of 2 engineers from PoC to production; standardised CI/CD as a single Makefile workflow on Jenkins and Git."
+      ],
+      "tech": ["Python", "Ray", "Kubernetes", "Kafka", "Redis", "Grafana", "OpenSearch", "Jenkins", "Git"]
+    },
+    {
+      "company": "Mercedes-Benz Research & Development India",
+      "role": "Senior Data Engineer / Technical Lead",
+      "period": "2019 – 2025",
+      "highlights": [
+        "Enterprise Data Products Platform (Technical Lead, 2022–2025): led 50+ data products on an Azure Databricks Medallion architecture (32 bronze, 12 silver, 9 gold), ~2 TB/day across 40+ orchestrated pipelines.",
+        "Market Supply & Demand Optimisation (2021–2023): distributed optimisation platform evaluating ~20B parameter combinations; runtime cut from 3 hours to under 2 minutes, ~$50M/year in savings.",
+        "Smart Layout Planning (2024–2025): automated plant fixture layout generation with mathematical optimisation; planning effort cut from 36 months to ~2 months, saving €500K per cycle.",
+        "Global Campaign Monitoring (2019–2021): modernised a semi-manual legacy system into an automated cloud pipeline; processing time 6h → 2h, reporting accuracy 70% → 99%+.",
+        "Standardised CI/CD on Azure DevOps across multiple applications; owned architecture and release management, and mentored engineers."
+      ],
+      "tech": ["Azure Databricks", "PySpark", "Python", "ADLS", "Azure Functions", "Azure Web Apps", "Azure DevOps", "Google OR-Tools", "Power BI", "Qlik"]
+    },
+    {
+      "company": "NetApp Inc.",
+      "role": "Intern – Data Regulation",
+      "period": "2018 – 2019",
+      "highlights": ["Won the Intern Showcase for innovation in risk assessment, competing against 40 interns."],
+      "tech": ["Java", "Python", "GCP", "DLP-API", "App Engine"]
+    },
+    {
+      "company": "Cognizant Technology Solutions",
+      "role": "Program Associate Trainee → Data Tester",
+      "period": "2015 – 2016",
+      "highlights": ["Led testing for a mortgage project; earned client recognition for efficiency and the top first-year performance rating."],
+      "tech": ["Data Testing", "QA"]
+    }
+  ],
+  "education": [
+    { "degree": "M.Tech", "school": "Vellore Institute of Technology (VIT)", "place": "Vellore", "period": "2017 – 2019" },
+    { "degree": "B.Tech", "school": "Karunya University", "place": "Coimbatore", "period": "2011 – 2015" }
+  ],
+  "awards": [
+    "Mercedes-Benz R&D India: 2 Silver Awards, 1 Bronze Award and Star Team Award",
+    "NetApp India: Intern Showcase Winner (innovation in risk assessment)"
+  ]
+}
