@@ -108,7 +108,7 @@ h2::before { content: "$ "; color: var(--head); }
 
 .metrics {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px;
-  margin-top: 2.5rem; background: var(--line);
+  background: var(--line);
   border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
 }
 .metrics div { background: var(--panel); padding: 1.25rem; }
@@ -356,3 +356,8 @@ h2::before { content: "$ "; color: var(--head); }
 .tree.growing .t-leaf { animation: sprout .45s steps(5, end) both; animation-delay: calc(var(--d, 0s) + .45s + var(--j) * .13s); }
 .tree.growing .t-base { animation: sprout .4s steps(4, end) both; }
 .logo svg { display: block; width: 24px; height: 24px; fill: var(--accent); }
+
+/* ---------- Key achievements title ---------- */
+.achievements { margin-top: 2.5rem; }
+h2.plain::before { content: none; }
+.achievements h2 { margin-bottom: .9rem; font-size: 1.1rem; }

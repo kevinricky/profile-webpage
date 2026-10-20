@@ -39,8 +39,11 @@ function render(r) {
         <a class="btn ripple" href="${esc(c.github)}" target="_blank" rel="noopener">${ICONS.github}GitHub</a>
         <a class="btn ripple" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
       </div>
-      <div class="metrics reveal">
-        ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
+      <div class="achievements reveal">
+        <h2 class="plain">Key achievements</h2>
+        <div class="metrics">
+          ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
+        </div>
       </div>
     </header>
 
