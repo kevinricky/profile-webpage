@@ -127,56 +127,71 @@ function wrapText(s, max) {
 }
 
 function buildTree(t) {
-  const colW = 118, padX = 30, top = 34, step = 46, chipW = 102;
-  const roles = t.roles;
-  const maxLevel = Math.max(...roles.map(r => r.level));
-  const W = roles.length * colW + padX * 2;
-  const xs = roles.map((_, i) => padX + colW * i + colW / 2);
-  const ys = roles.map(r => top + (maxLevel - r.level) * step);
-  let bottom = 0;
+  const colW = 292, padX = 24, step = 78, base0 = 52, chipW = 132, chipH = 18, chipGap = 4;
+  const maxLevel = Math.max(...t.roles.map(r => r.level));
 
-  const cols = roles.map((r, i) => {
-    const x = xs[i], y = ys[i], tx = x - 54;
-    let cy = y + 32;
-    const lines = wrapText(r.role, 15);
-    let g = lines.map((l, k) => `<text class="t-role" x="${x - 44}" y="${cy + k * 13}">${esc(l)}</text>`).join('');
-    cy += lines.length * 13;
-    g += `<text class="t-org" x="${x - 44}" y="${cy + 1}">${esc(r.org)}</text>`;
-    cy += 16;
+  // Group consecutive roles by company: each company becomes one vertical stack.
+  const companies = [];
+  t.roles.forEach(r => {
+    const last = companies[companies.length - 1];
+    if (last && last.org === r.org) last.roles.push(r);
+    else companies.push({ org: r.org, roles: [r] });
+  });
 
-    let leaves = '', lastMid = y + 30;
-    r.functions.forEach((f, j) => {
-      const fl = wrapText(f, 15), h = fl.length * 12 + 10, mid = cy + h / 2;
-      leaves += `<g class="t-leaf" style="--j:${j}">
-        <path class="t-dot" d="M${tx} ${mid} H${x - 46}"/>
-        <rect class="t-chip" x="${x - 46}" y="${cy}" width="${chipW}" height="${h}" rx="4"/>
-        ${fl.map((l, k) => `<text class="t-fn" x="${x - 40}" y="${cy + 14 + k * 12}">${esc(l)}</text>`).join('')}
+  const top = 44;                                    // room for the tallest chip stack
+  const baseY = top + base0 + maxLevel * step;       // company baseline
+  const W = companies.length * colW + padX * 2;
+  const H = baseY + 56;
+  const yOf = r => baseY - base0 - r.level * step;
+  const xOf = c => padX + c * colW + 10;
+
+  const cols = companies.map((co, c) => {
+    const x = xOf(c), tx = x + 124;
+    const topY = Math.min(...co.roles.map(yOf));
+    const delay = c * 0.55;
+
+    const stack = co.roles.map((r, k) => {
+      const y = yOf(r), d = (delay + 0.5 + k * 0.3).toFixed(2);
+      const lines = wrapText(r.role, 16);
+      const label = lines.map((l, i) =>
+        `<text class="t-role" x="${x + 14}" y="${y - 7 - (lines.length - 1 - i) * 13}">${esc(l)}</text>`).join('');
+
+      const fns = r.functions;
+      const h = fns.length * chipH + (fns.length - 1) * chipGap;
+      let cy = y - h / 2, leaves = '';
+      fns.forEach((f, j) => {
+        const mid = cy + chipH / 2;
+        leaves += `<g class="t-leaf" style="--j:${j}">
+          <path class="t-dot" d="M${tx} ${mid} H${x + 138}"/>
+          <rect class="t-chip" x="${x + 138}" y="${cy}" width="${chipW}" height="${chipH}" rx="4"/>
+          <text class="t-fn" x="${x + 144}" y="${cy + 12.5}">${esc(f)}</text>
+        </g>`;
+        cy += chipH + chipGap;
+      });
+      const trunkTop = y - h / 2 + chipH / 2, trunkBot = y + h / 2 - chipH / 2;
+
+      return `<g class="t-col" style="--d:${d}s">
+        <path class="t-dot" d="M${x + 8} ${y} H${tx}"/>
+        <path class="t-dot" d="M${tx} ${trunkTop} V${trunkBot}"/>
+        ${leaves}${label}
+        <circle class="t-node${r.senior ? ' senior' : ''}${r.current ? ' current' : ''}" cx="${x}" cy="${y}" r="${r.senior ? 8 : 6}"/>
       </g>`;
-      lastMid = mid;
-      cy += h + 8;
-    });
-    bottom = Math.max(bottom, cy);
+    }).join('');
 
-    return `<g class="t-col" style="--i:${i}">
-      <path class="t-dot" d="M${x} ${y + 8} Q${tx} ${y + 10} ${tx} ${y + 30} V${lastMid}"/>
-      ${leaves}${g}
-      <circle class="t-node${r.senior ? ' senior' : ''}${r.current ? ' current' : ''}" cx="${x}" cy="${y}" r="${r.senior ? 8 : 6}"/>
+    const period = (t.periods || {})[co.org] || '';
+    return `<g class="t-company">
+      <path class="t-path" pathLength="1" style="--d:${(delay + 0.2).toFixed(2)}s;--t:1.2s" d="M${x} ${baseY} V${topY}"/>
+      ${stack}
+      <rect class="t-base" x="${x - 6}" y="${baseY - 6}" width="12" height="12" rx="2"/>
+      <text class="t-co" x="${x - 6}" y="${baseY + 26}">${esc(co.org)}</text>
+      <text class="t-per" x="${x - 6}" y="${baseY + 41}">${esc(period)}</text>
     </g>`;
   }).join('');
 
-  // Solid progression line: climb at the previous column, then run right.
-  let d = `M${xs[0]} ${ys[0]}`;
-  for (let i = 1; i < roles.length; i++) d += ` L${xs[i - 1]} ${ys[i]} L${xs[i]} ${ys[i]}`;
-
-  const guides = Array.from({ length: maxLevel + 1 }, (_, l) => {
-    const gy = top + (maxLevel - l) * step;
-    return `<path class="t-guide" d="M${padX} ${gy} H${W - padX}"/>`;
-  }).join('');
-
-  const summary = roles.map(r => `${r.role} at ${r.org}`).join(', then ');
-  return `<svg class="tree-svg" viewBox="0 0 ${W} ${bottom + 16}" role="img" aria-label="Career path, junior to senior: ${esc(summary)}">
-    ${guides}
-    <path class="t-path" pathLength="1" d="${d}"/>
+  const baseline = `<path class="t-path" pathLength="1" style="--d:0s;--t:${(companies.length * 0.55 + 0.4).toFixed(2)}s" d="M${xOf(0)} ${baseY} H${xOf(companies.length - 1)}"/>`;
+  const summary = t.roles.map(r => `${r.role} at ${r.org}`).join(', then ');
+  return `<svg class="tree-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Career path, junior to senior, grouped by company: ${esc(summary)}">
+    ${baseline}
     ${cols}
   </svg>`;
 }
@@ -189,7 +204,7 @@ function initTree() {
   const btn = document.getElementById('treeToggle');
   const cmd = document.getElementById('treeCmd');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const CRT_MS = 700, COLLAPSE_MS = 700, GROW_MS = 3400;
+  const CRT_MS = 700, COLLAPSE_MS = 700, GROW_MS = 4400;
   let busy = false;
 
   function hide() {

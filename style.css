@@ -305,9 +305,8 @@ h2::before { content: "$ "; color: var(--head); }
 }
 
 .tree-scroll { overflow-x: auto; padding: 1rem .5rem .5rem; }
-.tree-svg { display: block; width: 100%; min-width: 860px; height: auto; font-family: var(--mono); }
+.tree-svg { display: block; width: 100%; min-width: 900px; height: auto; font-family: var(--mono); }
 
-.t-guide { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 6; opacity: .7; fill: none; }
 .t-path  { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; filter: drop-shadow(0 0 4px var(--glow)); }
 .t-dot   { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-dasharray: 1 5; stroke-linecap: round; opacity: .85; }
 .t-node  { fill: var(--panel); stroke: var(--accent); stroke-width: 2.5; }
@@ -317,14 +316,11 @@ h2::before { content: "$ "; color: var(--head); }
 .t-role  { fill: var(--head); font-size: 11.5px; font-weight: 600; }
 .t-org   { fill: var(--accent); font-size: 10px; }
 .t-chip  { fill: var(--chip); stroke: var(--line); stroke-width: 1; }
-.t-fn    { fill: var(--muted); font-size: 9.5px; }
+.t-fn    { fill: var(--muted); font-size: 10px; }
 .t-col, .t-leaf { transform-box: fill-box; transform-origin: center top; }
 
 /* Growth: the line draws itself up the staircase, then each role and its
    branches sprout in career order. */
-.tree.growing .t-path { animation: grow-path 2.6s ease-in-out both; stroke-dasharray: 1; }
-.tree.growing .t-col  { animation: sprout .55s steps(6, end) both; animation-delay: calc(var(--i) * .27s + .15s); }
-.tree.growing .t-leaf { animation: sprout .45s steps(5, end) both; animation-delay: calc(var(--i) * .27s + .55s + var(--j) * .13s); }
 @keyframes grow-path { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes sprout    { from { opacity: 0; transform: translateY(-10px) scale(.85); } to { opacity: 1; transform: none; } }
 /* .t-col's own sprout would also fade its leaves, so leaves re-run theirs on top */
@@ -356,3 +352,12 @@ h2::before { content: "$ "; color: var(--head); }
   border: 1px solid var(--accent); border-radius: 4px; padding: 0 .45rem;
 }
 @media (prefers-reduced-motion: reduce) { .tree.cleared .tree-head h2::after { animation: none; } }
+
+/* Company-stack tree */
+.t-base { fill: var(--panel); stroke: var(--accent); stroke-width: 2.5; }
+.t-co   { fill: var(--head); font-size: 12.5px; font-weight: 700; }
+.t-per  { fill: var(--muted); font-size: 10px; }
+.tree.growing .t-path { stroke-dasharray: 1; animation: grow-path var(--t, 1.2s) ease-in-out both; animation-delay: var(--d, 0s); }
+.tree.growing .t-col  { animation: sprout .55s steps(6, end) both; animation-delay: var(--d, 0s); }
+.tree.growing .t-leaf { animation: sprout .45s steps(5, end) both; animation-delay: calc(var(--d, 0s) + .45s + var(--j) * .13s); }
+.tree.growing .t-base { animation: sprout .4s steps(4, end) both; }
