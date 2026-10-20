@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light" data-accent="business">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +15,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script>
-    // Apply saved theme before first paint to avoid a flash
-    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; var a = localStorage.getItem('accent'); if (a) document.documentElement.dataset.accent = a; } catch (e) {}
+    // Restore the visitor's saved theme and accent before first paint (no flash).
+    // Defaults (light + business) live on the <html> tag; only valid saved values override them.
+    try {
+      var d = document.documentElement, t = localStorage.getItem('theme'), a = localStorage.getItem('accent');
+      if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      if (a && /^[a-z]+$/.test(a)) d.dataset.accent = a;
+    } catch (e) {}
   </script>
 </head>
 <body id="top">
