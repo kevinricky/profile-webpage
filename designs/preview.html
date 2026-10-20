@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design previews – Kevin Ricky</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;line-height:1.6}
+  a{color:inherit}
+  ul{list-style:none}
+
+  /* ---------- switcher ---------- */
+  .switcher{position:fixed;z-index:50;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:4px;background:#111;border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+  .switcher button{border:0;background:none;color:#bbb;font:600 .82rem Inter,sans-serif;padding:.55rem 1rem;border-radius:999px;cursor:pointer}
+  .switcher button.on{background:#fff;color:#111}
+
+  /* =========================================================
+     A · EDITORIAL  – calm, typographic, recruiter-friendly
+     ========================================================= */
+  .A{background:#faf8f4;color:#1c1b19}
+  .A .wrap{max-width:760px;margin:0 auto;padding:5rem 1.25rem 7rem}
+  .A h1{font:600 clamp(2.4rem,6vw,3.6rem)/1.05 Fraunces,serif;letter-spacing:-.02em}
+  .A .role{font:400 1.25rem Fraunces,serif;color:#8a4b2a;margin:.5rem 0 1.25rem}
+  .A .lede{font-size:1.05rem;color:#4a4742}
+  .A .links{display:flex;gap:1.25rem;flex-wrap:wrap;margin:1.5rem 0 0;font-size:.9rem}
+  .A .links a{border-bottom:1px solid #8a4b2a;text-decoration:none;padding-bottom:1px}
+  .A h2{font:600 .78rem Inter;letter-spacing:.16em;text-transform:uppercase;color:#8a4b2a;margin:4rem 0 1.5rem;padding-bottom:.6rem;border-bottom:1px solid #e3ddd2}
+  .A .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem 2rem;margin-top:2.5rem}
+  .A .metrics b{display:block;font:600 2rem Fraunces,serif;color:#1c1b19}
+  .A .metrics span{font-size:.82rem;color:#6b665e;display:block;line-height:1.4}
+  .A .job{display:grid;grid-template-columns:130px 1fr;gap:1rem 2rem;margin-bottom:2.5rem}
+  .A .job .when{font-size:.85rem;color:#6b665e;padding-top:.3rem}
+  .A .job h3{font:600 1.25rem Fraunces,serif}
+  .A .job .r{color:#8a4b2a;font-size:.95rem;margin-bottom:.75rem}
+  .A .job li{position:relative;padding-left:1.1rem;margin-bottom:.5rem;font-size:.93rem;color:#3d3a35}
+  .A .job li::before{content:"–";position:absolute;left:0;color:#8a4b2a}
+  .A .tags{margin-top:.8rem;font-size:.78rem;color:#6b665e}
+  .A .sk{display:grid;grid-template-columns:200px 1fr;gap:.4rem 2rem;font-size:.9rem;margin-bottom:.9rem}
+  .A .sk b{font-weight:600}
+  .A .sk span{color:#4a4742}
+  @media(max-width:620px){.A .job,.A .sk{grid-template-columns:1fr}}
+
+  /* =========================================================
+     B · PLATFORM / TERMINAL – dark, technical, memorable
+     ========================================================= */
+  .B{background:#0a0e14;color:#c9d1d9;font-family:'JetBrains Mono',monospace;font-size:14px;
+     background-image:radial-gradient(circle at 80% -10%,rgba(56,189,248,.15),transparent 40%),linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+     background-size:auto,40px 40px,40px 40px}
+  .B .wrap{max-width:980px;margin:0 auto;padding:4rem 1.25rem 7rem}
+  .B .prompt{color:#7ee787}
+  .B h1{font:600 clamp(2rem,5vw,3rem)/1.1 'JetBrains Mono';color:#fff;margin:.6rem 0}
+  .B h1 em{font-style:normal;color:#38bdf8}
+  .B .role{color:#38bdf8}
+  .B .lede{max-width:70ch;margin-top:1rem;color:#9aa5b1;font-family:Inter,sans-serif;font-size:.98rem}
+  .B .chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.25rem}
+  .B .chips span,.B .tags span{border:1px solid #263041;background:#111826;color:#9fd2ff;padding:.15rem .6rem;border-radius:4px;font-size:.75rem}
+  .B .links{display:flex;gap:.75rem;margin-top:1.75rem;flex-wrap:wrap}
+  .B .links a{padding:.5rem 1rem;border:1px solid #38bdf8;color:#38bdf8;text-decoration:none;border-radius:4px;font-size:.82rem}
+  .B .links a:first-child{background:#38bdf8;color:#04121b}
+  .B h2{color:#fff;font-size:1rem;margin:4rem 0 1.25rem}
+  .B h2::before{content:"$ ";color:#7ee787}
+  .B .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#263041;border:1px solid #263041;border-radius:8px;overflow:hidden;margin-top:2.5rem}
+  .B .metrics div{background:#0d1320;padding:1.25rem}
+  .B .metrics b{display:block;font-size:1.9rem;color:#38bdf8}
+  .B .metrics span{font:400 .8rem Inter,sans-serif;color:#8b96a3}
+  .B .job{border:1px solid #263041;background:#0d1320cc;border-radius:8px;padding:1.4rem;margin-bottom:1rem}
+  .B .job header{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .B .job h3{color:#fff;font-size:1rem}
+  .B .job .r{color:#38bdf8;font-size:.82rem}
+  .B .job .when{color:#7ee787;font-size:.8rem}
+  .B .job ul{margin-top:.9rem;font-family:Inter,sans-serif;font-size:.9rem;color:#a5b0bc}
+  .B .job li{padding-left:1.1rem;position:relative;margin-bottom:.4rem}
+  .B .job li::before{content:">";position:absolute;left:0;color:#7ee787}
+  .B .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem}
+  .B .skgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+  .B .sk{border:1px solid #263041;border-radius:8px;padding:1rem;background:#0d1320cc}
+  .B .sk b{color:#fff;font-size:.82rem;display:block;margin-bottom:.5rem}
+  .B .sk span{display:inline-block;margin:0 .35rem .35rem 0;font-size:.75rem;color:#9aa5b1}
+  .B .sk span::after{content:","}.B .sk span:last-child::after{content:""}
+
+  /* =========================================================
+     C · BENTO – modern product-page feel, big numbers
+     ========================================================= */
+  .C{background:#f4f5f8;color:#14161f}
+  .C .wrap{max-width:1120px;margin:0 auto;padding:3.5rem 1.25rem 7rem}
+  .C .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .C .tile{background:#fff;border-radius:22px;padding:1.6rem;border:1px solid #e8eaf1;box-shadow:0 1px 2px rgba(20,22,31,.04)}
+  .C .hero{grid-column:span 8;background:linear-gradient(135deg,#4f46e5,#7c3aed 55%,#db2777);color:#fff;border:0;min-height:320px;display:flex;flex-direction:column;justify-content:flex-end}
+  .C .hero h1{font:700 clamp(2.2rem,5vw,3.4rem)/1.05 Inter;letter-spacing:-.03em}
+  .C .hero .role{opacity:.9;font-weight:500;margin:.4rem 0 1rem}
+  .C .hero p{opacity:.85;font-size:.92rem;max-width:56ch}
+  .C .contact{grid-column:span 4;display:flex;flex-direction:column;gap:.6rem;justify-content:center}
+  .C .contact a{display:block;padding:.75rem 1rem;border-radius:12px;background:#f4f5f8;text-decoration:none;font-weight:600;font-size:.88rem}
+  .C .contact a:first-child{background:#14161f;color:#fff}
+  .C .stat{grid-column:span 4}
+  .C .stat b{display:block;font:700 2.6rem/1 Inter;letter-spacing:-.03em;background:linear-gradient(135deg,#4f46e5,#db2777);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .C .stat span{display:block;margin-top:.6rem;font-size:.85rem;color:#5b6070}
+  .C h2{grid-column:span 12;font:700 1.5rem Inter;letter-spacing:-.02em;margin:2rem 0 .25rem}
+  .C .job{grid-column:span 6}
+  .C .job.big{grid-column:span 12}
+  .C .job .when{font-size:.75rem;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:.08em}
+  .C .job h3{font:700 1.2rem Inter;margin:.2rem 0}
+  .C .job .r{font-size:.88rem;color:#5b6070;margin-bottom:.8rem}
+  .C .job ul{font-size:.88rem;color:#3a3f4d}
+  .C .job li{margin-bottom:.45rem;padding-left:1rem;position:relative}
+  .C .job li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:#7c3aed}
+  .C .big ul{columns:2;column-gap:2rem}.C .big li{break-inside:avoid}
+  .C .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem}
+  .C .tags span,.C .sk span{font-size:.74rem;background:#eef0ff;color:#4338ca;padding:.18rem .6rem;border-radius:999px;font-weight:600}
+  .C .sk{grid-column:span 4}
+  .C .sk b{display:block;font-size:.9rem;margin-bottom:.7rem}
+  .C .sk span{display:inline-block;margin:0 .3rem .3rem 0}
+  @media(max-width:860px){.C .hero,.C .contact,.C .stat,.C .job,.C .sk{grid-column:span 12}.C .big ul{columns:1}}
+
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="root"></main>
+<div class="switcher" role="tablist">
+  <button data-d="A">A · Editorial</button>
+  <button data-d="B">B · Platform</button>
+  <button data-d="C">C · Bento</button>
+</div>
+
+<script src="../data/resume.js"></script>
+<script>
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const li  = a => a.map(x => `<li>${esc(x)}</li>`).join('');
+const sp  = a => a.map(x => `<span>${esc(x)}</span>`).join('');
+
+const T = {
+  A: r => `<div class="A"><div class="wrap">
+    <h1>${esc(r.name)}</h1>
+    <p class="role">${esc(r.title)}</p>
+    <p class="lede">${esc(r.summary)}</p>
+    <div class="links"><a href="mailto:${r.contact.email}">${r.contact.email}</a><a href="${r.contact.linkedin}">LinkedIn</a><a href="${r.contact.github}">GitHub</a></div>
+    <div class="metrics">${r.metrics.slice(0,4).map(m=>`<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}</div>
+    <h2>Experience</h2>
+    ${r.experience.map(e=>`<div class="job"><div class="when">${esc(e.period)}</div><div><h3>${esc(e.company)}</h3><p class="r">${esc(e.role)}</p><ul>${li(e.highlights)}</ul><p class="tags">${esc(e.tech.join(' · '))}</p></div></div>`).join('')}
+    <h2>Skills</h2>
+    ${r.skills.map(s=>`<div class="sk"><b>${esc(s.group)}</b><span>${esc(s.items.join(' · '))}</span></div>`).join('')}
+    <h2>Education &amp; Awards</h2>
+    ${r.education.map(e=>`<div class="sk"><b>${esc(e.degree)} · ${esc(e.period)}</b><span>${esc(e.school)}, ${esc(e.place)}</span></div>`).join('')}
+    ${r.awards.map(a=>`<div class="sk"><b>Award</b><span>${esc(a)}</span></div>`).join('')}
+  </div></div>`,
+
+  B: r => `<div class="B"><div class="wrap">
+    <p class="prompt">kevin@platform:~$ whoami</p>
+    <h1>${esc(r.name.split(' ')[0])} <em>${esc(r.name.split(' ')[1])}</em></h1>
+    <p class="role">${esc(r.title)} · ${esc(r.subtitle)}</p>
+    <p class="lede">${esc(r.summary)}</p>
+    <div class="chips">${sp(r.stack)}</div>
+    <div class="links"><a href="mailto:${r.contact.email}">Hire me</a><a href="${r.contact.github}">GitHub</a><a href="${r.contact.linkedin}">LinkedIn</a></div>
+    <div class="metrics">${r.metrics.map(m=>`<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}</div>
+    <h2>git log --career</h2>
+    ${r.experience.map(e=>`<article class="job"><header><div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div><span class="when">${esc(e.period)}</span></header><ul>${li(e.highlights)}</ul><div class="tags">${sp(e.tech)}</div></article>`).join('')}
+    <h2>ls ./skills</h2>
+    <div class="skgrid">${r.skills.map(s=>`<div class="sk"><b>${esc(s.group)}</b>${sp(s.items)}</div>`).join('')}</div>
+    <h2>cat education awards</h2>
+    <div class="skgrid">${r.education.map(e=>`<div class="sk"><b>${esc(e.degree)} · ${esc(e.period)}</b><span>${esc(e.school)}, ${esc(e.place)}</span></div>`).join('')}${r.awards.map(a=>`<div class="sk"><b>award</b><span>${esc(a)}</span></div>`).join('')}</div>
+  </div></div>`,
+
+  C: r => `<div class="C"><div class="wrap"><div class="grid">
+    <div class="tile hero"><h1>${esc(r.name)}</h1><p class="role">${esc(r.title)}</p><p>${esc(r.summary.split('. ').slice(0,2).join('. '))}.</p></div>
+    <div class="tile contact"><a href="mailto:${r.contact.email}">✉ Get in touch</a><a href="${r.contact.linkedin}">LinkedIn ↗</a><a href="${r.contact.github}">GitHub ↗</a></div>
+    ${r.metrics.map(m=>`<div class="tile stat"><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
+    <h2>Experience</h2>
+    ${r.experience.map((e,i)=>`<div class="tile job ${i<2?'big':''}"><div class="when">${esc(e.period)}</div><h3>${esc(e.company)}</h3><p class="r">${esc(e.role)}</p><ul>${li(e.highlights)}</ul><div class="tags">${sp(e.tech)}</div></div>`).join('')}
+    <h2>Skills</h2>
+    ${r.skills.map(s=>`<div class="tile sk"><b>${esc(s.group)}</b>${sp(s.items)}</div>`).join('')}
+    <h2>Education &amp; Awards</h2>
+    ${r.education.map(e=>`<div class="tile sk"><b>${esc(e.degree)} · ${esc(e.period)}</b><p>${esc(e.school)}, ${esc(e.place)}</p></div>`).join('')}
+    ${r.awards.map(a=>`<div class="tile sk"><b>Award</b><p>${esc(a)}</p></div>`).join('')}
+  </div></div></div>`
+};
+
+Promise.resolve(window.RESUME).then(data => {
+  const root = document.getElementById('root');
+  const buttons = document.querySelectorAll('.switcher button');
+  const show = d => {
+    root.innerHTML = T[d](data);
+    buttons.forEach(b => b.classList.toggle('on', b.dataset.d === d));
+    try { localStorage.setItem('design', d); } catch (e) {}
+    window.scrollTo(0, 0);
+  };
+  buttons.forEach(b => b.onclick = () => show(b.dataset.d));
+  let start = 'A'; try { start = localStorage.getItem('design') || 'A'; } catch (e) {}
+  show(start);
+}).catch(() => {
+  document.getElementById('root').innerHTML = '<p style="padding:2rem;font-family:sans-serif">Could not load data/resume.js.</p>';
+});
+</script>
+</body>
+</html>

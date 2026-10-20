@@ -1,49 +1,36 @@
 # Kevin Ricky – Personal Profile Website
 
-A modern, responsive personal portfolio website showcasing the professional profile, work experience, education, and projects of Kevin Ricky, a Senior Data Engineer specializing in end-to-end pipeline architecture, cloud computing, and big data solutions.
+Lightweight, dependency-free portfolio for Kevin Ricky, Senior Data & ML Platform Engineer. Hosted free on GitHub Pages at [kevinricky.online](https://kevinricky.online).
 
-## 🚀 Overview
+## Updating the content
 
-This single-page portfolio website provides a comprehensive overview of Kevin's professional journey, including:
+All profile content lives in [`data/resume.js`](data/resume.js). Edit that file (summary, metrics, experience, skills, education, awards) and push; the page renders from it. No HTML changes needed.
 
-- **About Section** – Introduction and professional summary
-- **Work Experience** – Career history at top companies (Visa, Mercedes-Benz, NetApp, Cognizant)
-- **Education** – Academic background (M.Tech, B.Tech, school credentials)
-- **Projects** – Notable data engineering projects with impact metrics
-- **Contact** – Direct contact information and social links
+## Run locally
 
-## 🛠️ Tech Stack
+No server or build step needed: just open `index.html` in a browser. (The data is loaded with a normal `<script>` tag, so it also works straight from disk.)
 
-- **HTML5** – Semantic markup
-- **CSS3** – Custom styling with responsive design
-- **JavaScript** – Interactive elements (navbar toggle)
-- **Font Awesome 6.5** – Icons for social links and UI elements
+## Tech
 
-## 📱 Features
+- Plain HTML, CSS and vanilla JavaScript – no framework, no build step
+- Google Fonts (Inter, JetBrains Mono)
+- Dark/light theme (saved in the browser), responsive layout, scroll reveal
 
-- **Responsive Design** – Works on desktop, tablet, and mobile devices
-- **Smooth Navigation** – Anchor-based navigation with smooth scrolling
-- **Interactive Navbar** – Hamburger menu for mobile devices
-- **Professional Cards** – Clean card-based layout for experience and projects
-- **Skills Display** – Tag-based skill categorization
-- **Achievements Section** – Recognition and awards showcase
-
-## 📂 Project Structure
+## Structure
 
 ```
 profile-webpage/
-├── index.html      # Main HTML file
-├── style.css      # Stylesheet
-├── script.js      # JavaScript for interactions
-└── README.md      # This file
+├── index.html          # Page shell
+├── style.css           # Theme + layout
+├── script.js           # Renders resume.js, theme toggle, accent picker, career tree
+├── data/resume.js      # All profile content
+├── designs/preview.html# Design explorations (not part of the live site)
+└── assets/             # Photo, favicon
 ```
 
-## 🔗 Links
+## Links
 
-- **LinkedIn**: [linkedin.com/in/kevin-ricky-a7500899](https://www.linkedin.com/in/kevin-ricky-a7500899/)
-- **GitHub**: [github.com/kevinricky](https://github.com/kevinricky)
-- **Email**: kevinricky999@yahoo.com
-
-## 📄 License
+- LinkedIn: [linkedin.com/in/kevinricky](https://www.linkedin.com/in/kevinricky/)
+- GitHub: [github.com/kevinricky](https://github.com/kevinricky)
 
 Copyright © 2025 Kevin Ricky. All rights reserved.
