@@ -175,3 +175,8 @@ h2::before { content: "$ "; color: var(--green); }
   .nav-links.open { display: flex; }
   .wrap { padding-top: 5rem; }
 }
+
+/* ---------- Brand logos ---------- */
+.ico { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+.btn, .contact a { display: inline-flex; align-items: center; gap: .5rem; }
+.contact a { display: flex; }
