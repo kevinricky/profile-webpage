@@ -40,7 +40,7 @@ function render(r) {
         <a class="btn ripple" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
       </div>
       <div class="achievements reveal">
-        <h2>cat key-achievements.md</h2>
+        <h2>git shortlog --impact</h2>
         <div class="metrics">
           ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
         </div>
