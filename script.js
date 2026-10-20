@@ -146,7 +146,7 @@ fetch('data/resume.json')
 /* ---------- Accent colour picker ---------- */
 const ACCENTS = [
   ['red', '#ef4444'], ['wine', '#8c2f4b'], ['maroon', '#9b1c1c'], ['violet', '#8b5cf6'],
-  ['blue', '#3b82f6'], ['teal', '#14b8a6'], ['coffee', '#8b5e3c']
+  ['blue', '#3b82f6'], ['teal', '#14b8a6'], ['coffee', '#8b5e3c'], ['sunshine', '#facc15'], ['bright', '#f97316']
 ];
 const accentList = document.querySelector('#accentMenu ul');
 accentList.innerHTML = ACCENTS.map(([name, hex]) =>
