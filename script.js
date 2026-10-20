@@ -46,9 +46,9 @@ function render(r) {
 
     <section id="career-tree" class="tree">
       <div class="tree-head">
-        <h2>tree ./career-path</h2>
-        <button type="button" class="tree-toggle" id="treeToggle" aria-expanded="true" aria-controls="treeBody">
-          <span class="led" aria-hidden="true"></span><span class="tree-toggle-text">Hide tree</span>
+        <h2 id="treeCmd">tree ./career-path<span class="run-hint" aria-hidden="true">⏎ run</span></h2>
+        <button type="button" class="tree-toggle" id="treeToggle" aria-expanded="true" aria-controls="treeBody" aria-label="Clear the career tree">
+          <span class="tree-toggle-text">clear</span>
         </button>
       </div>
       <div class="tree-body" id="treeBody">
@@ -187,7 +187,7 @@ function initTree() {
   const body = sec.querySelector('.tree-body');
   const crt = sec.querySelector('.crt');
   const btn = document.getElementById('treeToggle');
-  const label = btn.querySelector('.tree-toggle-text');
+  const cmd = document.getElementById('treeCmd');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const CRT_MS = 700, COLLAPSE_MS = 700, GROW_MS = 3400;
   let busy = false;
@@ -195,8 +195,17 @@ function initTree() {
   function hide() {
     busy = true;
     btn.setAttribute('aria-expanded', 'false');
-    label.textContent = 'Show tree';
-    const collapse = () => { body.classList.add('collapsed'); body.inert = true; setTimeout(() => { busy = false; }, COLLAPSE_MS); };
+    const collapse = () => {
+      body.classList.add('collapsed');
+      body.inert = true;
+      // Once cleared, the heading turns into a suggested command the visitor can run again
+      sec.classList.add('cleared');
+      btn.hidden = true;
+      cmd.setAttribute('role', 'button');
+      cmd.setAttribute('tabindex', '0');
+      cmd.setAttribute('aria-label', 'Run tree ./career-path to show the career tree');
+      setTimeout(() => { busy = false; }, COLLAPSE_MS);
+    };
     if (reduce) { collapse(); return; }
     crt.classList.add('crt-off');            // 1. TV switches off
     setTimeout(collapse, CRT_MS);            // 2. page closes up the gap
@@ -205,7 +214,11 @@ function initTree() {
   function show() {
     busy = true;
     btn.setAttribute('aria-expanded', 'true');
-    label.textContent = 'Hide tree';
+    btn.hidden = false;
+    sec.classList.remove('cleared');
+    cmd.removeAttribute('role');
+    cmd.removeAttribute('tabindex');
+    cmd.removeAttribute('aria-label');
     body.inert = false;
     crt.classList.remove('crt-off');
     if (!reduce) sec.classList.add('growing');   // path draws, branches sprout
@@ -213,9 +226,13 @@ function initTree() {
     setTimeout(() => { sec.classList.remove('growing'); busy = false; }, reduce ? 0 : GROW_MS);
   }
 
-  btn.addEventListener('click', () => {
-    if (busy) return;
-    body.classList.contains('collapsed') ? show() : hide();
+  btn.addEventListener('click', () => { if (!busy) hide(); });
+
+  // "Run" the suggested command to bring the tree back
+  const run = () => { if (!busy && sec.classList.contains('cleared')) show(); };
+  cmd.addEventListener('click', run);
+  cmd.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); run(); }
   });
 }
 
