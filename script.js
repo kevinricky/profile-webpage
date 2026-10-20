@@ -142,3 +142,25 @@ fetch('data/resume.json')
   .catch(() => {
     app.innerHTML = '<p class="lede">Could not load profile data. Please reach me at kevinricky999@yahoo.com.</p>';
   });
+
+/* ---------- Accent colour picker ---------- */
+const ACCENTS = [
+  ['red', '#ef4444'], ['wine', '#8c2f4b'], ['maroon', '#9b1c1c'], ['violet', '#8b5cf6'],
+  ['blue', '#3b82f6'], ['teal', '#14b8a6'], ['turquoise', '#2fd9c9']
+];
+const accentList = document.querySelector('#accentMenu ul');
+accentList.innerHTML = ACCENTS.map(([name, hex]) =>
+  `<li><button type="button" data-accent="${name}" aria-pressed="false"><span class="swatch" style="--sw:${hex}"></span>${name}</button></li>`
+).join('');
+
+function setAccent(name) {
+  root.dataset.accent = name;
+  accentList.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.accent === name));
+}
+accentList.addEventListener('click', e => {
+  const b = e.target.closest('button[data-accent]');
+  if (!b) return;
+  setAccent(b.dataset.accent);
+  try { localStorage.setItem('accent', b.dataset.accent); } catch (err) {}
+});
+setAccent(root.dataset.accent || 'blue');

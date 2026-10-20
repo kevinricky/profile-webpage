@@ -9,12 +9,6 @@
   --text:      #c9d1d9;
   --muted:     #9aa5b1;
   --head:      #ffffff;
-  --accent:    #38bdf8;
-  --accent-ink:#04121b;
-  --green:     #7ee787;
-  --chip:      #111826;
-  --chip-text: #9fd2ff;
-  --glow:      rgba(56,189,248,.15);
   --grid:      rgba(255,255,255,.025);
   --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
   --sans: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -27,12 +21,6 @@
   --text:      #24292f;
   --muted:     #57606a;
   --head:      #0b1220;
-  --accent:    #0969da;
-  --accent-ink:#ffffff;
-  --green:     #1a7f37;
-  --chip:      #eef4ff;
-  --chip-text: #0550ae;
-  --glow:      rgba(9,105,218,.10);
   --grid:      rgba(0,0,0,.03);
 }
 
@@ -180,3 +168,52 @@ h2::before { content: "$ "; color: var(--green); }
 .ico { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .btn, .contact a { display: inline-flex; align-items: center; gap: .5rem; }
 .contact a { display: flex; }
+
+/* ---------- Accent colours ----------
+   Each accent sets only its base colour (--a). Everything that used to be a
+   hard-coded accent/green is derived from it, tuned per theme for contrast. */
+:root, [data-accent="blue"]      { --a: #3b82f6; }
+[data-accent="red"]       { --a: #ef4444; }
+[data-accent="wine"]      { --a: #8c2f4b; }
+[data-accent="maroon"]    { --a: #9b1c1c; }
+[data-accent="violet"]    { --a: #8b5cf6; }
+[data-accent="teal"]      { --a: #14b8a6; }
+[data-accent="turquoise"] { --a: #2fd9c9; }
+
+:root, [data-theme="dark"] {
+  --accent:     color-mix(in srgb, var(--a) 62%, #fff);
+  --accent-ink: #0a0e14;
+  --chip:       color-mix(in srgb, var(--a) 14%, var(--panel));
+  --glow:       color-mix(in srgb, var(--a) 18%, transparent);
+}
+[data-theme="light"] {
+  --accent:     color-mix(in srgb, var(--a) 82%, #000);
+  --accent-ink: #fff;
+  --chip:       color-mix(in srgb, var(--a) 9%, var(--panel));
+  --glow:       color-mix(in srgb, var(--a) 12%, transparent);
+}
+:root { --green: var(--accent); --chip-text: var(--accent); }
+
+/* ---------- Theme / accent picker ---------- */
+.theme-wrap { position: relative; }
+.accent-menu {
+  position: absolute; top: 100%; right: 0; padding-top: .5rem;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+}
+.theme-wrap:hover .accent-menu,
+.theme-wrap:focus-within .accent-menu { opacity: 1; visibility: visible; transform: none; }
+.accent-menu ul {
+  display: flex; flex-direction: column; gap: .15rem; min-width: 140px; padding: .4rem;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.accent-menu button {
+  display: flex; align-items: center; gap: .6rem; width: 100%; padding: .35rem .5rem;
+  background: none; border: 0; border-radius: 4px; cursor: pointer;
+  font: inherit; font-size: .78rem; color: var(--muted); text-transform: capitalize; text-align: left;
+}
+.accent-menu button:hover { background: var(--chip); color: var(--head); }
+.accent-menu button[aria-pressed="true"] { color: var(--head); }
+.accent-menu button[aria-pressed="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
+.swatch { width: 14px; height: 14px; border-radius: 50%; background: var(--sw); border: 1px solid rgba(255,255,255,.35); flex-shrink: 0; }
