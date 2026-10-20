@@ -49,7 +49,10 @@ function render(r) {
       ${r.experience.map(e => `
         <article class="job reveal">
           <header>
-            <div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div>
+            <div class="co">
+              ${e.logo ? `<span class="logo" role="img" aria-label="${esc(e.company)} logo"><i style="-webkit-mask-image:url(assets/logos/${esc(e.logo)}.svg);mask-image:url(assets/logos/${esc(e.logo)}.svg)"></i></span>` : ""}
+              <div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div>
+            </div>
             <span class="when">${esc(e.period)}</span>
           </header>
           <ul>${items(e.highlights)}</ul>

@@ -31,6 +31,7 @@
   "experience": [
     {
       "company": "Visa Inc.",
+      "logo": "visa",
       "role": "Senior Platform Engineer – AI Platform (Fraud Detection)",
       "period": "2025 – Present",
       "current": true,
@@ -46,6 +47,7 @@
     },
     {
       "company": "Mercedes-Benz Research & Development India",
+      "logo": "mercedes",
       "role": "Senior Data Engineer / Technical Lead",
       "period": "2019 – 2025",
       "highlights": [
@@ -59,6 +61,7 @@
     },
     {
       "company": "NetApp Inc.",
+      "logo": "netapp",
       "role": "Intern – Data Regulation",
       "period": "2018 – 2019",
       "highlights": ["Won the Intern Showcase for innovation in risk assessment, competing against 40 interns."],
@@ -66,6 +69,7 @@
     },
     {
       "company": "Cognizant Technology Solutions",
+      "logo": "cognizant",
       "role": "Program Associate Trainee → Data Tester",
       "period": "2015 – 2016",
       "highlights": ["Led testing for a mortgage project; earned client recognition for efficiency and the top first-year performance rating."],

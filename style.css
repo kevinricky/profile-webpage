@@ -250,3 +250,16 @@ h2::before { content: "$ "; color: var(--head); }
   [data-theme="light"]        { --contrast: hsl(from var(--a) calc(h + 180) 65% 34%); }
 }
 .dollar { color: var(--head); }
+
+/* ---------- Company logos ---------- */
+.co { display: flex; align-items: center; gap: .9rem; }
+.logo {
+  display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--chip);
+}
+.logo i {
+  display: block; width: 24px; height: 24px; background: var(--accent);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
