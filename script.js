@@ -44,6 +44,20 @@ function render(r) {
       </div>
     </header>
 
+    <section id="career-tree" class="tree">
+      <div class="tree-head">
+        <h2>tree ./career-path</h2>
+        <button type="button" class="tree-toggle" id="treeToggle" aria-expanded="true" aria-controls="treeBody">
+          <span class="led" aria-hidden="true"></span><span class="tree-toggle-text">Hide tree</span>
+        </button>
+      </div>
+      <div class="tree-body" id="treeBody">
+        <div class="tree-clip">
+          <div class="crt"><div class="tree-scroll">${buildTree(r.careerTree)}</div></div>
+        </div>
+      </div>
+    </section>
+
     <section id="experience">
       <h2>git log --career</h2>
       ${r.experience.map(e => `
@@ -91,8 +105,118 @@ function render(r) {
     </div>
     <small>&copy; ${new Date().getFullYear()} ${esc(r.name)}</small>`;
 
+  initTree();
   initReveal();
   initActiveNav();
+}
+
+
+/* ---------- Career tree ----------
+   Landscape SVG: columns run left→right in career order, height = seniority
+   (junior at the bottom, senior at the top). Solid line = role progression,
+   dotted branches = the functions performed in each role. */
+function wrapText(s, max) {
+  const lines = [];
+  let line = '';
+  s.split(' ').forEach(w => {
+    if (line && (line + ' ' + w).length > max) { lines.push(line); line = w; }
+    else line = line ? line + ' ' + w : w;
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+
+function buildTree(t) {
+  const colW = 118, padX = 30, top = 34, step = 46, chipW = 102;
+  const roles = t.roles;
+  const maxLevel = Math.max(...roles.map(r => r.level));
+  const W = roles.length * colW + padX * 2;
+  const xs = roles.map((_, i) => padX + colW * i + colW / 2);
+  const ys = roles.map(r => top + (maxLevel - r.level) * step);
+  let bottom = 0;
+
+  const cols = roles.map((r, i) => {
+    const x = xs[i], y = ys[i], tx = x - 54;
+    let cy = y + 32;
+    const lines = wrapText(r.role, 15);
+    let g = lines.map((l, k) => `<text class="t-role" x="${x - 44}" y="${cy + k * 13}">${esc(l)}</text>`).join('');
+    cy += lines.length * 13;
+    g += `<text class="t-org" x="${x - 44}" y="${cy + 1}">${esc(r.org)}</text>`;
+    cy += 16;
+
+    let leaves = '', lastMid = y + 30;
+    r.functions.forEach((f, j) => {
+      const fl = wrapText(f, 15), h = fl.length * 12 + 10, mid = cy + h / 2;
+      leaves += `<g class="t-leaf" style="--j:${j}">
+        <path class="t-dot" d="M${tx} ${mid} H${x - 46}"/>
+        <rect class="t-chip" x="${x - 46}" y="${cy}" width="${chipW}" height="${h}" rx="4"/>
+        ${fl.map((l, k) => `<text class="t-fn" x="${x - 40}" y="${cy + 14 + k * 12}">${esc(l)}</text>`).join('')}
+      </g>`;
+      lastMid = mid;
+      cy += h + 8;
+    });
+    bottom = Math.max(bottom, cy);
+
+    return `<g class="t-col" style="--i:${i}">
+      <path class="t-dot" d="M${x} ${y + 8} Q${tx} ${y + 10} ${tx} ${y + 30} V${lastMid}"/>
+      ${leaves}${g}
+      <circle class="t-node${r.senior ? ' senior' : ''}${r.current ? ' current' : ''}" cx="${x}" cy="${y}" r="${r.senior ? 8 : 6}"/>
+    </g>`;
+  }).join('');
+
+  // Solid progression line: climb at the previous column, then run right.
+  let d = `M${xs[0]} ${ys[0]}`;
+  for (let i = 1; i < roles.length; i++) d += ` L${xs[i - 1]} ${ys[i]} L${xs[i]} ${ys[i]}`;
+
+  const guides = Array.from({ length: maxLevel + 1 }, (_, l) => {
+    const gy = top + (maxLevel - l) * step;
+    return `<path class="t-guide" d="M${padX} ${gy} H${W - padX}"/>`;
+  }).join('');
+
+  const summary = roles.map(r => `${r.role} at ${r.org}`).join(', then ');
+  return `<svg class="tree-svg" viewBox="0 0 ${W} ${bottom + 16}" role="img" aria-label="Career path, junior to senior: ${esc(summary)}">
+    ${guides}
+    <path class="t-path" pathLength="1" d="${d}"/>
+    ${cols}
+  </svg>`;
+}
+
+function initTree() {
+  const sec = document.getElementById('career-tree');
+  if (!sec) return;
+  const body = sec.querySelector('.tree-body');
+  const crt = sec.querySelector('.crt');
+  const btn = document.getElementById('treeToggle');
+  const label = btn.querySelector('.tree-toggle-text');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CRT_MS = 700, COLLAPSE_MS = 700, GROW_MS = 3400;
+  let busy = false;
+
+  function hide() {
+    busy = true;
+    btn.setAttribute('aria-expanded', 'false');
+    label.textContent = 'Show tree';
+    const collapse = () => { body.classList.add('collapsed'); body.inert = true; setTimeout(() => { busy = false; }, COLLAPSE_MS); };
+    if (reduce) { collapse(); return; }
+    crt.classList.add('crt-off');            // 1. TV switches off
+    setTimeout(collapse, CRT_MS);            // 2. page closes up the gap
+  }
+
+  function show() {
+    busy = true;
+    btn.setAttribute('aria-expanded', 'true');
+    label.textContent = 'Hide tree';
+    body.inert = false;
+    crt.classList.remove('crt-off');
+    if (!reduce) sec.classList.add('growing');   // path draws, branches sprout
+    body.classList.remove('collapsed');          // page is pushed down slowly
+    setTimeout(() => { sec.classList.remove('growing'); busy = false; }, reduce ? 0 : GROW_MS);
+  }
+
+  btn.addEventListener('click', () => {
+    if (busy) return;
+    body.classList.contains('collapsed') ? show() : hide();
+  });
 }
 
 /* ---------- Scroll reveal ---------- */

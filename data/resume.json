@@ -28,6 +28,27 @@
     { "group": "Programming & Backend", "items": ["Python", "SQL", "Java", "C++", "JavaScript", "FastAPI", "Flask", "REST APIs", "SQL Server", "MySQL", "NoSQL"] },
     { "group": "Leadership", "items": ["Technical Leadership", "Solution Architecture", "Mentoring", "Release Management", "Stakeholder Management", "PoC-to-Production"] }
   ],
+  "careerTree": {
+    "_note": "Roles run left-to-right in order; level (0 = entry) sets the height. Positions are not to scale. The 'functions' lists are DRAFT placeholders to be confirmed.",
+    "roles": [
+      { "role": "Program Associate Trainee", "org": "Cognizant", "level": 0, "senior": false,
+        "functions": ["Test case design", "SQL data validation", "Defect logging"] },
+      { "role": "Data Tester", "org": "Cognizant", "level": 1, "senior": false,
+        "functions": ["ETL data testing", "Test planning", "Client defect triage"] },
+      { "role": "Data Regulation Intern", "org": "NetApp", "level": 1, "senior": false,
+        "functions": ["Sensitive-data scanning", "DLP API prototype", "Risk assessment"] },
+      { "role": "PG Engineer Trainee", "org": "Mercedes-Benz", "level": 1, "senior": false,
+        "functions": ["Pipeline prototyping", "Dashboard building", "Data cleansing"] },
+      { "role": "Data Engineer", "org": "Mercedes-Benz", "level": 2, "senior": false,
+        "functions": ["Databricks ETL pipelines", "Campaign monitoring", "Power BI / Qlik reports"] },
+      { "role": "Senior Data Engineer", "org": "Mercedes-Benz", "level": 3, "senior": true,
+        "functions": ["Optimisation engine", "Cluster tuning", "Layout planning automation"] },
+      { "role": "Technical Lead", "org": "Mercedes-Benz", "level": 4, "senior": true,
+        "functions": ["Medallion architecture", "CI/CD standards", "Release management", "Mentoring"] },
+      { "role": "Senior Platform Engineer", "org": "Visa", "level": 4, "senior": true, "current": true,
+        "functions": ["Ray execution engine", "Kafka event pipelines", "Fault tolerance", "Observability"] }
+    ]
+  },
   "experience": [
     {
       "company": "Visa Inc.",
