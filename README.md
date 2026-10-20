@@ -4,11 +4,11 @@ Lightweight, dependency-free portfolio for Kevin Ricky, Senior Data & ML Platfor
 
 ## Updating the content
 
-All profile content lives in [`data/resume.json`](data/resume.json). Edit that file (summary, metrics, experience, skills, education, awards) and push; the page renders from it. No HTML changes needed.
+All profile content lives in [`data/resume.js`](data/resume.js). Edit that file (summary, metrics, experience, skills, education, awards) and push; the page renders from it. No HTML changes needed.
 
 ## Run locally
 
-The page loads `data/resume.json` with `fetch`, so it needs a local server (opening `index.html` directly won't work). Use the VS Code **Live Server** extension, or any static server.
+No server or build step needed: just open `index.html` in a browser. (The data is loaded with a normal `<script>` tag, so it also works straight from disk.)
 
 ## Tech
 
@@ -22,8 +22,8 @@ The page loads `data/resume.json` with `fetch`, so it needs a local server (open
 profile-webpage/
 ├── index.html          # Page shell
 ├── style.css           # Theme + layout
-├── script.js           # Renders resume.json, theme toggle, nav
-├── data/resume.json    # All profile content
+├── script.js           # Renders resume.js, theme toggle, accent picker, career tree
+├── data/resume.js      # All profile content
 ├── designs/preview.html# Design explorations (not part of the live site)
 └── assets/             # Photo, favicon
 ```

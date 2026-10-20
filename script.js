@@ -1,6 +1,6 @@
 /* ============================================================
    KEVIN RICKY – PROFILE WEBSITE SCRIPTS
-   Renders the page from data/resume.json, then wires up the UI.
+   Renders the page from data/resume.js, then wires up the UI.
    ============================================================ */
 
 const root = document.documentElement;
@@ -295,12 +295,12 @@ navLinks.addEventListener('click', e => {
 });
 
 /* ---------- Load data ---------- */
-fetch('data/resume.json')
-  .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
-  .then(render)
-  .catch(() => {
-    app.innerHTML = '<p class="lede">Could not load profile data. Please reach me at kevinricky999@yahoo.com.</p>';
-  });
+try {
+  render(window.RESUME);
+} catch (err) {
+  console.error(err);
+  app.innerHTML = '<p class="lede">Could not load profile data. Please reach me at kevinricky999@yahoo.com.</p>';
+}
 
 /* ---------- Accent colour picker ---------- */
 const ACCENTS = [

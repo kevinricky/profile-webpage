@@ -1,4 +1,5 @@
-{
+// All profile content. Edit this file to update the site (loaded with a <script> tag so the page also works when opened straight from disk).
+window.RESUME = {
   "name": "Kevin Ricky",
   "title": "Senior Data & ML Platform Engineer",
   "subtitle": "Distributed Systems",
@@ -106,4 +107,5 @@
     "Mercedes-Benz R&D India: 2 Silver Awards, 1 Bronze Award and Star Team Award",
     "NetApp India: Intern Showcase Winner (innovation in risk assessment)"
   ]
-}
+};
+

@@ -127,6 +127,7 @@
   <button data-d="C">C · Bento</button>
 </div>
 
+<script src="../data/resume.js"></script>
 <script>
 const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const li  = a => a.map(x => `<li>${esc(x)}</li>`).join('');
@@ -178,7 +179,7 @@ const T = {
   </div></div></div>`
 };
 
-fetch('../data/resume.json').then(r => r.json()).then(data => {
+Promise.resolve(window.RESUME).then(data => {
   const root = document.getElementById('root');
   const buttons = document.querySelectorAll('.switcher button');
   const show = d => {
@@ -191,7 +192,7 @@ fetch('../data/resume.json').then(r => r.json()).then(data => {
   let start = 'A'; try { start = localStorage.getItem('design') || 'A'; } catch (e) {}
   show(start);
 }).catch(() => {
-  document.getElementById('root').innerHTML = '<p style="padding:2rem;font-family:sans-serif">Open this page through a local server (python -m http.server) so resume.json can load.</p>';
+  document.getElementById('root').innerHTML = '<p style="padding:2rem;font-family:sans-serif">Could not load data/resume.js.</p>';
 });
 </script>
 </body>
