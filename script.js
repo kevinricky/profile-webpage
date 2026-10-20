@@ -24,7 +24,7 @@ function render(r) {
 
   app.innerHTML = `
     <header>
-      <p class="prompt">kevin@platform:~$ whoami</p>
+      <p class="prompt">kevin@platform:~<span class="dollar">$</span> whoami</p>
       <div class="hero-row">
         <img class="avatar" src="assets/20230520_122155.jpg" alt="${esc(r.name)}" />
         <div>

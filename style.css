@@ -56,7 +56,7 @@ body {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.brand { color: var(--green); font-weight: 600; text-decoration: none; }
+.brand { color: var(--contrast, var(--head)); font-weight: 600; text-decoration: none; }
 .nav-links { display: flex; gap: .25rem; }
 .nav-links a {
   display: block; padding: .35rem .75rem; border-radius: 4px;
@@ -73,7 +73,7 @@ body {
 .menu-btn { display: none; }
 
 /* ---------- Hero ---------- */
-.prompt { color: var(--green); }
+.prompt { color: var(--contrast, var(--head)); }
 .hero-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: .75rem 0; }
 .avatar {
   width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
@@ -104,7 +104,7 @@ h1 em { font-style: normal; color: var(--accent); }
 /* ---------- Sections ---------- */
 section { margin-top: 4rem; }
 h2 { color: var(--contrast, var(--head)); font-size: 1rem; margin-bottom: 1.25rem; }
-h2::before { content: "$ "; color: var(--green); }
+h2::before { content: "$ "; color: var(--head); }
 
 .metrics {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px;
@@ -249,3 +249,4 @@ h2::before { content: "$ "; color: var(--green); }
   :root, [data-theme="dark"]  { --contrast: hsl(from var(--a) calc(h + 180) 80% 72%); }
   [data-theme="light"]        { --contrast: hsl(from var(--a) calc(h + 180) 65% 34%); }
 }
+.dollar { color: var(--head); }
