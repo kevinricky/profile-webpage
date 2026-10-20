@@ -17,7 +17,6 @@ function render(r) {
 
   app.innerHTML = `
     <header>
-      <p class="prompt">kevin@platform:~$ whoami</p>
       <div class="hero-row">
         <img class="avatar" src="assets/20230520_122155.jpg" alt="${esc(r.name)}" />
         <div>
@@ -33,12 +32,12 @@ function render(r) {
         <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
       </div>
       <div class="metrics reveal">
-        ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
+        ${r.metrics.slice(0, 4).map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
       </div>
     </header>
 
     <section id="experience">
-      <h2>git log --career</h2>
+      <h2>Experience</h2>
       ${r.experience.map(e => `
         <article class="job reveal">
           <header>
@@ -46,27 +45,27 @@ function render(r) {
             <span class="when">${esc(e.period)}</span>
           </header>
           <ul>${items(e.highlights)}</ul>
-          <div class="tags">${chips(e.tech)}</div>
+          <p class="tags">${esc(e.tech.join(" · "))}</p>
         </article>`).join('')}
     </section>
 
     <section id="skills">
-      <h2>ls ./skills</h2>
+      <h2>Skills</h2>
       <div class="grid">
-        ${r.skills.map(s => `<div class="box reveal"><b>${esc(s.group)}</b><div class="tags">${chips(s.items)}</div></div>`).join('')}
+        ${r.skills.map(s => `<div class="box reveal"><b>${esc(s.group)}</b><p class="tags">${esc(s.items.join(" · "))}</p></div>`).join('')}
       </div>
     </section>
 
     <section id="education">
-      <h2>cat education awards</h2>
+      <h2>Education &amp; Awards</h2>
       <div class="grid">
         ${r.education.map(e => `<div class="box reveal"><b>${esc(e.degree)} · ${esc(e.period)}</b><p>${esc(e.school)}, ${esc(e.place)}</p></div>`).join('')}
-        ${r.awards.map(a => `<div class="box reveal"><b>award</b><p>${esc(a)}</p></div>`).join('')}
+        ${r.awards.map(a => `<div class="box reveal"><b>Award</b><p>${esc(a)}</p></div>`).join('')}
       </div>
     </section>
 
     <section id="projects">
-      <h2>ls ./public-projects</h2>
+      <h2>Public Projects</h2>
       <div class="soon reveal">Work in progress – public projects will be added here as they become available.</div>
     </section>`;
 
