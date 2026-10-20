@@ -359,5 +359,4 @@ h2::before { content: "$ "; color: var(--head); }
 
 /* ---------- Key achievements title ---------- */
 .achievements { margin-top: 2.5rem; }
-h2.plain::before { content: none; }
 .achievements h2 { margin-bottom: .9rem; font-size: 1.1rem; }
