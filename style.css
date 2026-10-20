@@ -179,3 +179,8 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -
   }
   .nav-links.open { display: flex; }
 }
+
+/* ---------- Brand logos ---------- */
+.ico { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+.btn, .contact a { display: inline-flex; align-items: center; gap: .5rem; }
+.contact a { display: flex; }
