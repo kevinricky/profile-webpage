@@ -12,63 +12,43 @@ const chips = a => a.map(x => `<span>${esc(x)}</span>`).join('');
 
 /* ---------- Render ---------- */
 function render(r) {
-  const [first, ...rest] = r.name.split(' ');
   const c = r.contact;
 
   app.innerHTML = `
-    <header>
-      <p class="prompt">kevin@platform:~$ whoami</p>
-      <div class="hero-row">
+    <div class="bento">
+      <div class="tile hero">
         <img class="avatar" src="assets/20230520_122155.jpg" alt="${esc(r.name)}" />
-        <div>
-          <h1>${esc(first)} <em>${esc(rest.join(' '))}</em></h1>
-          <p class="role cursor">${esc(r.title)} · ${esc(r.subtitle)}</p>
-        </div>
+        <h1>${esc(r.name)}</h1>
+        <p class="role">${esc(r.title)} · ${esc(r.subtitle)}</p>
+        <p class="sum">${esc(r.summary.split('. ').slice(0, 2).join('. '))}.</p>
       </div>
-      <p class="lede">${esc(r.summary)}</p>
-      <div class="chips">${chips(r.stack)}</div>
-      <div class="links">
-        <a class="btn primary" href="mailto:${esc(c.email)}">Hire me</a>
-        <a class="btn" href="${esc(c.github)}" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+      <div class="tile contact">
+        <a href="mailto:${esc(c.email)}">✉ Get in touch</a>
+        <a href="${esc(c.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="${esc(c.github)}" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
-      <div class="metrics reveal">
-        ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
-      </div>
-    </header>
+      ${r.metrics.map(m => `<div class="tile stat reveal"><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
 
-    <section id="experience">
-      <h2>git log --career</h2>
-      ${r.experience.map(e => `
-        <article class="job reveal">
-          <header>
-            <div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div>
-            <span class="when">${esc(e.period)}</span>
-          </header>
+      <h2 id="experience">Experience</h2>
+      ${r.experience.map((e, i) => `
+        <article class="tile job ${i < 2 ? 'big' : ''} reveal">
+          <div class="when">${esc(e.period)}</div>
+          <h3>${esc(e.company)}</h3>
+          <p class="r">${esc(e.role)}</p>
           <ul>${items(e.highlights)}</ul>
           <div class="tags">${chips(e.tech)}</div>
         </article>`).join('')}
-    </section>
 
-    <section id="skills">
-      <h2>ls ./skills</h2>
-      <div class="grid">
-        ${r.skills.map(s => `<div class="box reveal"><b>${esc(s.group)}</b><div class="tags">${chips(s.items)}</div></div>`).join('')}
-      </div>
-    </section>
+      <h2 id="skills">Skills</h2>
+      ${r.skills.map(s => `<div class="tile sk reveal"><b>${esc(s.group)}</b><div class="tags">${chips(s.items)}</div></div>`).join('')}
 
-    <section id="education">
-      <h2>cat education awards</h2>
-      <div class="grid">
-        ${r.education.map(e => `<div class="box reveal"><b>${esc(e.degree)} · ${esc(e.period)}</b><p>${esc(e.school)}, ${esc(e.place)}</p></div>`).join('')}
-        ${r.awards.map(a => `<div class="box reveal"><b>award</b><p>${esc(a)}</p></div>`).join('')}
-      </div>
-    </section>
+      <h2 id="education">Education &amp; Awards</h2>
+      ${r.education.map(e => `<div class="tile sk reveal"><b>${esc(e.degree)} · ${esc(e.period)}</b><p>${esc(e.school)}, ${esc(e.place)}</p></div>`).join('')}
+      ${r.awards.map(a => `<div class="tile sk reveal"><b>Award</b><p>${esc(a)}</p></div>`).join('')}
 
-    <section id="projects">
-      <h2>ls ./public-projects</h2>
-      <div class="soon reveal">Work in progress – public projects will be added here as they become available.</div>
-    </section>`;
+      <h2 id="projects">Public Projects</h2>
+      <div class="tile soon reveal">Work in progress – public projects will be added here as they become available.</div>
+    </div>`;
 
   document.getElementById('contact').innerHTML = `
     <h2>Get in touch</h2>
@@ -107,7 +87,7 @@ function initActiveNav() {
       }
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
-  document.querySelectorAll('section[id], footer[id]').forEach(s => io.observe(s));
+  document.querySelectorAll('h2[id], footer[id]').forEach(s => io.observe(s));
 }
 
 /* ---------- Theme toggle ---------- */
