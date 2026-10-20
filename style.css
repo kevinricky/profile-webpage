@@ -172,15 +172,15 @@ h2::before { content: "$ "; color: var(--green); }
 /* ---------- Accent colours ----------
    Each accent sets only its base colour (--a). Everything that used to be a
    hard-coded accent/green is derived from it, tuned per theme for contrast. */
-:root, [data-accent="blue"]      { --a: #3b82f6; }
-[data-accent="red"]       { --a: #ef4444; }
+:root, [data-accent="business"]  { --a: #3b82f6; }
+[data-accent="blood"]     { --a: #ef4444; }
 [data-accent="wine"]      { --a: #8c2f4b; }
-[data-accent="maroon"]    { --a: #9b1c1c; }
 [data-accent="violet"]    { --a: #8b5cf6; }
 [data-accent="teal"]      { --a: #14b8a6; }
 [data-accent="coffee"]    { --a: #8b5e3c; }
 [data-accent="sunshine"]  { --a: #facc15; }
-[data-accent="bright"]    { --a: #f97316; }
+[data-accent="nature"]    { --a: #22c55e; }
+[data-accent="right"]     { --a: #f97316; }
 
 :root, [data-theme="dark"] {
   --accent:     color-mix(in srgb, var(--a) 62%, #fff);
@@ -219,3 +219,31 @@ h2::before { content: "$ "; color: var(--green); }
 .accent-menu button[aria-pressed="true"] { color: var(--head); }
 .accent-menu button[aria-pressed="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
 .swatch { width: 14px; height: 14px; border-radius: 50%; background: var(--sw); border: 1px solid rgba(255,255,255,.35); flex-shrink: 0; }
+
+/* ---------- Electronic ripple (GitHub / LinkedIn buttons) ----------
+   Two rings pulse outward past the button edge. steps() makes the motion
+   jump frame-by-frame like a digital signal instead of easing smoothly. */
+.btn.ripple { position: relative; }
+.btn.ripple::before,
+.btn.ripple::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  border: 1px solid var(--accent); opacity: 0;
+}
+.btn.ripple:hover::before { animation: pulse-ring .9s steps(5, end) infinite; }
+.btn.ripple:hover::after  { animation: pulse-ring .9s steps(5, end) .3s infinite; border-style: dashed; }
+.btn.ripple:hover { animation: glitch .9s steps(1, end) infinite; }
+
+@keyframes pulse-ring {
+  0%   { inset: 0;      opacity: .95; }
+  100% { inset: -16px;  opacity: 0; }
+}
+@keyframes glitch {
+  0%, 100% { transform: translateY(-2px); }
+  18%      { transform: translate(1px, -2px); }
+  36%      { transform: translate(-1px, -2px); }
+  54%      { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn.ripple:hover, .btn.ripple:hover::before, .btn.ripple:hover::after { animation: none; }
+  .btn.ripple:hover::before { opacity: .6; inset: -4px; }
+}

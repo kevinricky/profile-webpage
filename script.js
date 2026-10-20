@@ -36,8 +36,8 @@ function render(r) {
       <div class="chips">${chips(r.stack)}</div>
       <div class="links">
         <a class="btn primary" href="mailto:${esc(c.email)}">Hire me</a>
-        <a class="btn" href="${esc(c.github)}" target="_blank" rel="noopener">${ICONS.github}GitHub</a>
-        <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
+        <a class="btn ripple" href="${esc(c.github)}" target="_blank" rel="noopener">${ICONS.github}GitHub</a>
+        <a class="btn ripple" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
       </div>
       <div class="metrics reveal">
         ${r.metrics.map(m => `<div><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join('')}
@@ -83,8 +83,8 @@ function render(r) {
     <div class="links">
       <a class="btn primary" href="mailto:${esc(c.email)}">${esc(c.email)}</a>
       <a class="btn" href="tel:${esc(c.phone.replace(/[^+\d]/g, ''))}">${esc(c.phone)}</a>
-      <a class="btn" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
-      <a class="btn" href="${esc(c.github)}" target="_blank" rel="noopener">${ICONS.github}GitHub</a>
+      <a class="btn ripple" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${ICONS.linkedin}LinkedIn</a>
+      <a class="btn ripple" href="${esc(c.github)}" target="_blank" rel="noopener">${ICONS.github}GitHub</a>
     </div>
     <small>&copy; ${new Date().getFullYear()} ${esc(r.name)}</small>`;
 
@@ -146,8 +146,8 @@ fetch('data/resume.json')
 /* ---------- Accent colour picker ---------- */
 const ACCENTS = [
   // Ordered by hue, like the spectrum of light
-  ['wine', '#8c2f4b'], ['maroon', '#9b1c1c'], ['red', '#ef4444'], ['coffee', '#8b5e3c'],
-  ['bright', '#f97316'], ['sunshine', '#facc15'], ['teal', '#14b8a6'], ['blue', '#3b82f6'], ['violet', '#8b5cf6']
+  ['wine', '#8c2f4b'], ['blood', '#ef4444'], ['coffee', '#8b5e3c'],
+  ['right', '#f97316'], ['sunshine', '#facc15'], ['nature', '#22c55e'], ['teal', '#14b8a6'], ['business', '#3b82f6'], ['violet', '#8b5cf6']
 ];
 const accentList = document.querySelector('#accentMenu ul');
 accentList.innerHTML = ACCENTS.map(([name, hex]) =>
@@ -164,4 +164,4 @@ accentList.addEventListener('click', e => {
   setAccent(b.dataset.accent);
   try { localStorage.setItem('accent', b.dataset.accent); } catch (err) {}
 });
-setAccent(ACCENTS.some(([n]) => n === root.dataset.accent) ? root.dataset.accent : 'blue');
+setAccent(ACCENTS.some(([n]) => n === root.dataset.accent) ? root.dataset.accent : 'business');
