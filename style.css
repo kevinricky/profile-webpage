@@ -143,3 +143,8 @@ h2 {
   .job .when { grid-column: 1; grid-row: auto; padding: 0 0 .25rem; }
   .job header > div, .job ul, .job .tags { grid-column: 1; }
 }
+
+/* ---------- Brand logos ---------- */
+.ico { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+.btn, .contact a { display: inline-flex; align-items: center; gap: .5rem; }
+.contact a { display: flex; }
