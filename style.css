@@ -178,7 +178,7 @@ h2::before { content: "$ "; color: var(--green); }
 [data-accent="maroon"]    { --a: #9b1c1c; }
 [data-accent="violet"]    { --a: #8b5cf6; }
 [data-accent="teal"]      { --a: #14b8a6; }
-[data-accent="turquoise"] { --a: #2fd9c9; }
+[data-accent="coffee"]    { --a: #8b5e3c; }
 
 :root, [data-theme="dark"] {
   --accent:     color-mix(in srgb, var(--a) 62%, #fff);

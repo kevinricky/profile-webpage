@@ -146,7 +146,7 @@ fetch('data/resume.json')
 /* ---------- Accent colour picker ---------- */
 const ACCENTS = [
   ['red', '#ef4444'], ['wine', '#8c2f4b'], ['maroon', '#9b1c1c'], ['violet', '#8b5cf6'],
-  ['blue', '#3b82f6'], ['teal', '#14b8a6'], ['turquoise', '#2fd9c9']
+  ['blue', '#3b82f6'], ['teal', '#14b8a6'], ['coffee', '#8b5e3c']
 ];
 const accentList = document.querySelector('#accentMenu ul');
 accentList.innerHTML = ACCENTS.map(([name, hex]) =>
@@ -163,4 +163,4 @@ accentList.addEventListener('click', e => {
   setAccent(b.dataset.accent);
   try { localStorage.setItem('accent', b.dataset.accent); } catch (err) {}
 });
-setAccent(root.dataset.accent || 'blue');
+setAccent(ACCENTS.some(([n]) => n === root.dataset.accent) ? root.dataset.accent : 'blue');
