@@ -64,7 +64,7 @@ function render(r) {
         <article class="job reveal">
           <header>
             <div class="co">
-              ${e.logo ? `<span class="logo" role="img" aria-label="${esc(e.company)} logo"><i style="-webkit-mask-image:url(assets/logos/${esc(e.logo)}.svg);mask-image:url(assets/logos/${esc(e.logo)}.svg)"></i></span>` : ""}
+              ${e.logo ? `<span class="logo" role="img" aria-label="${esc(e.company)} logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${(window.LOGOS && window.LOGOS[e.logo]) || ''}"/></svg></span>` : ""}
               <div><h3>${esc(e.company)}</h3><span class="r">${esc(e.role)}</span></div>
             </div>
             <span class="when">${esc(e.period)}</span>

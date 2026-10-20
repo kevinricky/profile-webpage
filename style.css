@@ -257,12 +257,6 @@ h2::before { content: "$ "; color: var(--head); }
   display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px;
   border: 1px solid var(--line); border-radius: 8px; background: var(--chip);
 }
-.logo i {
-  display: block; width: 24px; height: 24px; background: var(--accent);
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center; mask-position: center;
-  -webkit-mask-size: contain; mask-size: contain;
-}
 
 /* ============================================================
    CAREER TREE
@@ -361,3 +355,4 @@ h2::before { content: "$ "; color: var(--head); }
 .tree.growing .t-col  { animation: sprout .55s steps(6, end) both; animation-delay: var(--d, 0s); }
 .tree.growing .t-leaf { animation: sprout .45s steps(5, end) both; animation-delay: calc(var(--d, 0s) + .45s + var(--j) * .13s); }
 .tree.growing .t-base { animation: sprout .4s steps(4, end) both; }
+.logo svg { display: block; width: 24px; height: 24px; fill: var(--accent); }
