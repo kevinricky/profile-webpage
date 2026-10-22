@@ -360,3 +360,9 @@ h2::before { content: "$ "; color: var(--head); }
 /* ---------- Key achievements title ---------- */
 .achievements { margin-top: 2.5rem; }
 .achievements h2 { margin-bottom: .9rem; font-size: 1.1rem; }
+
+/* ---------- Theme switch transition ---------- */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+

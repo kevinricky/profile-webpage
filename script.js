@@ -279,11 +279,39 @@ function initActiveNav() {
   document.querySelectorAll('section[id], footer[id]').forEach(s => io.observe(s));
 }
 
-/* ---------- Theme toggle ---------- */
-document.getElementById('themeToggle').addEventListener('click', () => {
-  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+/* ---------- Theme toggle ----------
+   Bouncy circle reveal (View Transitions API: Edge/Chrome/Safari). Three beats:
+   pop out a little, spring back once, then open with sharply increasing speed.
+   Browsers without the API, or with reduced motion, switch instantly. */
+const themeBtn = document.getElementById('themeToggle');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function applyTheme(next) {
   root.dataset.theme = next;
   try { localStorage.setItem('theme', next); } catch (e) {}
+}
+
+function revealCircle(x, y, radius) {
+  const c = r => `circle(${r}px at ${x}px ${y}px)`;
+  root.animate([
+    { clipPath: c(0),             easing: 'cubic-bezier(.2,.8,.3,1)' },   // 1. quick pop outward
+    { clipPath: c(radius * 0.07), offset: .16, easing: 'ease-in-out' },   // 2. spring back (the single bounce)
+    { clipPath: c(radius * 0.02), offset: .30, easing: 'cubic-bezier(.7,0,.84,0)' }, // 3. open, accelerating hard
+    { clipPath: c(radius) }
+  ], { duration: 1000, fill: 'both', pseudoElement: '::view-transition-new(root)' });
+}
+
+themeBtn.addEventListener('click', () => {
+  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+  if (reduceMotion.matches || !document.startViewTransition) { applyTheme(next); return; }
+
+  const r = themeBtn.getBoundingClientRect();
+  const x = r.left + r.width / 2, y = r.top + r.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+  document.startViewTransition(() => applyTheme(next)).ready
+    .then(() => revealCircle(x, y, radius))
+    .catch(() => {});
 });
 
 /* ---------- Mobile menu ---------- */
